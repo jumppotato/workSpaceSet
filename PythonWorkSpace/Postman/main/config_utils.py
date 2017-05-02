@@ -1,4 +1,5 @@
-import ConfigParser
+from backports import configparser
+
 
 class ConfigUtils:
 
@@ -7,7 +8,7 @@ class ConfigUtils:
     @staticmethod
     def get_parser(path):
         if ConfigUtils.__parser is None:
-            parser = ConfigParser.SafeConfigParser()
+            parser = configparser.ConfigParser()
             parser.read(path)
             ConfigUtils.__parser = parser
 

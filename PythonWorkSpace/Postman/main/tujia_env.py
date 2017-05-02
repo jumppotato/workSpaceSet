@@ -9,12 +9,12 @@ class TujiaEnv:
     FVT = 2
     PRO = 3
 
-    # 日志的类型
+    # 配置的类型
     DEV_SECTION_TYPE = 'dev'
     FVT_SECTION_TYPE = 'fvt'
     PRO_SECTION_TYPE = 'pro'
 
-    # 日志的Key
+    # 配置的Key
     USER_TOKEN_KEY = 'userToken'
     USER_TOKEN_NAME_KEY = 'userTokenName'
 

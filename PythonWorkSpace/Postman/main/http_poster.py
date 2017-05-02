@@ -1,29 +1,29 @@
-import urllib
-import urllib2
+import urllib.request
 
 
 class HttpPoster:
     """Send Http Request"""
 
     headers = {}
+    opener = None
 
     @staticmethod
     def post(url, data=None, headers=None):
 
-        encode_data = HttpPoster.__get_data_to_use(data)
+        encode_data = HttpPoster.__get_encode_data(data)
 
         headers_to_use = HttpPoster.__get_headers_if_necessary(headers)
 
-        request = urllib2.Request(url, encode_data, headers_to_use)
+        request = urllib.request.Request(url, encode_data, headers_to_use)
 
-        response = urllib2.urlopen(request)
+        response = urllib.request.urlopen(request)
         return response
 
     @staticmethod
-    def __get_data_to_use(data):
+    def __get_encode_data(data):
         encode_data = None
         if data is not None:
-            encode_data = urllib.urlencode(data)
+            encode_data = urllib.parse.urlencode(data).encode(encoding='UTF8')
         return encode_data
 
     @staticmethod
@@ -36,4 +36,3 @@ class HttpPoster:
     @staticmethod
     def set_headers(headers):
         HttpPoster.headers = headers
-
