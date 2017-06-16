@@ -1,36 +1,16 @@
 import json
-from time import ctime
 
-import concurrent
-from concurrent import futures
-
-from http_batch_poster import HttpBatchPoster
-from tujia_env import TujiaEnv
 from http_poster import HttpPoster
-
+from tujia_env import TujiaEnv
 
 # TODO: 3.add exception support
 
-def invoke_http():
-    HttpPoster.set_headers(dev_env.get_headers())
-    response = HttpPoster.post(url, data)
-    print(response.read().decode('utf-8'))
-    print(response.getcode())
-
 if __name__ == "__main__":
-    dev_env = TujiaEnv(TujiaEnv.DEV)
-    url = 'http://provideruc.dev.tujia.com:8080/usercenter-web/test/testapi'
+    env = TujiaEnv(TujiaEnv.FVT)
+    url = 'https://merchant.fvt.tujia.com/StoreApply/SimulateLogin?groupMerchantGlobalID=5ae93366-b5e0-49fe-a0ed' \
+          '-ab87d9804030&merchantGlobalID=1ec81178-a3e9-4135-8df7-b53954967b8e&url=https%3A%2F%2Fmerchantcrm.fvt' \
+          '.tujia.com%2Fmerchant-web%2Funit%2Fedithouseposition%3FhouseUnitId%3D591a9eeac004eb130ce5378f '
 
-    tavern_vo = {
-        "tavernId": 9999
-    }
+    url = ''
 
-    data = {
-        "input": json.dumps(tavern_vo),
-        "status": 1,
-        "cid": 2,
-        "searchVo": json.dumps(tavern_vo)
-    }
-    data_list = [data, data]
-
-    HttpBatchPoster.post(url, data_list, dev_env.get_headers())
+    HttpPoster.post(url, headers=env.get_headers())

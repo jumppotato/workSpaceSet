@@ -1,4 +1,3 @@
-# coding=utf-8
 from config_utils import ConfigUtils
 from cookie_utils import CookieUtils
 
