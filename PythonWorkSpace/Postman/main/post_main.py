@@ -1,7 +1,5 @@
-import json
-
-from http_poster import HttpPoster
-from tujia_env import TujiaEnv
+from main.http_poster import HttpPoster
+from tujia.tujia_env import TujiaEnv
 
 # TODO: 3.add exception support
 

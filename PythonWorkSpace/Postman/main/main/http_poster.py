@@ -13,7 +13,7 @@ class HttpPoster:
     __default_thread_size = 5
 
     @staticmethod
-    def batch_post(url, data_list=None, headers=None, thread_size=None):
+    def batch_post(url, data_list=None, headers=None, thread_size=None, post_processor=None):
         HttpPoster.set_headers(headers)
 
         if thread_size is None:
@@ -21,8 +21,16 @@ class HttpPoster:
 
         pool = futures.ThreadPoolExecutor(max_workers=thread_size)
 
-        for data in data_list:
-            pool.submit(HttpPoster.post(url, data))
+        for i in range(len(data_list)):
+            pool.submit(HttpPoster.__do_post, url, data_list[i], post_processor, i)
+
+    @staticmethod
+    def __do_post(url, req_data, processor, index):
+        processor.before_post(index, req_data)
+
+        response = HttpPoster.post(url, req_data)
+
+        processor.after_post(index, req_data, response)
 
     @staticmethod
     def post(url, data=None, headers=None):
@@ -34,13 +42,13 @@ class HttpPoster:
         request = urllib.request.Request(url, encode_data, headers_to_use)
 
         response = urllib.request.urlopen(request)
-        print(response.read().decode('utf-8'))
+        # print(response.read().decode('utf-8'))
         return response
 
     @staticmethod
     def __get_encode_data(data):
-        encode_data = None
-        if data is not None:
+        encode_data = data
+        if encode_data is not None:
             encode_data = urllib.parse.urlencode(data).encode(encoding='UTF8')
         return encode_data
 

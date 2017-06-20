@@ -1,5 +1,5 @@
-from config_utils import ConfigUtils
-from cookie_utils import CookieUtils
+from main.config_utils import ConfigUtils
+from main.cookie_utils import CookieUtils
 
 
 class TujiaEnv:
